@@ -7,11 +7,22 @@ services:
     volumes:
       - ".:/var/www/prometheus:rw"
     command: --config.file=/var/www/prometheus/prometheus.yml
-  node_exporter:
-    ports:
-      - 9100:9100
-    image: prom/node-exporter-linux-amd64
+    links:
+      - alert_manager
   alert_manager:
     image: prom/alertmanager-linux-amd64
     ports:
       - 9093:9093
+  grafana: # fixed to 3000
+     image: grafana/grafana:6.7.2-ubuntu
+     volumes:
+         - ./grafana_data:/var/lib/grafana:z
+     environment:
+       - GF_SECURITY_ADMIN_PASSWORD=pass
+     depends_on:
+       - prometheus
+     ports:
+       - 3000:3000
+     user: "472"
+     links:
+       - prometheus
