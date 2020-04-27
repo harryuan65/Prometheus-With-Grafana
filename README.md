@@ -11,7 +11,8 @@ Docker Engine + docker-compose
  
  
 ## How to use ?
-1. 你的服務（express server/rails server/go server），設定一個`/metrics`的route
+1. 在你的服務（express server/rails server/go server）設定一個`/metrics`的route
+  - 隨便回傳一個key: value `e.g. current_active_users: 45`
 2. 去編輯prometheus.yml
 3. 改一下那個yourservice
  - 換成你的service名字（自訂）
@@ -20,5 +21,5 @@ Docker Engine + docker-compose
 
 localhost:3000
 就可以進去grafana設定你要追蹤的資料
-
+選dashboard -> 建立一個panel -> add query -> 選prometheus -> query那邊打上 `e.g. current_active_users: 45`
 
